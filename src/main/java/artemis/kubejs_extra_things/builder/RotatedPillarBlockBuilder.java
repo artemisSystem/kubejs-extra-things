@@ -1,13 +1,11 @@
-package artemis.kubejs_extra_things.block;
+package artemis.kubejs_extra_things.builder;
 
 import artemis.kubejs_extra_things.custom.CustomRotatedPillarBlock;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.latvian.mods.kubejs.block.BlockBuilder;
 import dev.latvian.mods.kubejs.generator.AssetJsonGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 
 public class RotatedPillarBlockBuilder extends BlockBuilder {
 	public RotatedPillarBlockBuilder(ResourceLocation id) {

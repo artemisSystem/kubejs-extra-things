@@ -1,6 +1,6 @@
 package artemis.kubejs_extra_things;
 
-import artemis.kubejs_extra_things.block.*;
+import artemis.kubejs_extra_things.builder.*;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.RegistryObjectBuilderTypes;
 

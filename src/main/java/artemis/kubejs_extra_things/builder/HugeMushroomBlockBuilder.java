@@ -1,4 +1,4 @@
-package artemis.kubejs_extra_things.block;
+package artemis.kubejs_extra_things.builder;
 
 import dev.latvian.mods.kubejs.block.BlockBuilder;
 import dev.latvian.mods.kubejs.generator.AssetJsonGenerator;

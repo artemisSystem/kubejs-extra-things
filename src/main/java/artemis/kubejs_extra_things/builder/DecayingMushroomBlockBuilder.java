@@ -1,4 +1,4 @@
-package artemis.kubejs_extra_things.block;
+package artemis.kubejs_extra_things.builder;
 
 import artemis.kubejs_extra_things.custom.CustomDecayingMushroomBlock;
 import dev.latvian.mods.kubejs.block.BlockBuilder;
