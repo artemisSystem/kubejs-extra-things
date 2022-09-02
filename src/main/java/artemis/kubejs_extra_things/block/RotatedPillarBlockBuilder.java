@@ -1,5 +1,8 @@
 package artemis.kubejs_extra_things.block;
 
+import artemis.kubejs_extra_things.custom.CustomRotatedPillarBlock;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import dev.latvian.mods.kubejs.block.BlockBuilder;
 import dev.latvian.mods.kubejs.generator.AssetJsonGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +18,7 @@ public class RotatedPillarBlockBuilder extends BlockBuilder {
 
 	@Override
 	public Block createObject() {
-		return new RotatedPillarBlock(createProperties());
+		return new CustomRotatedPillarBlock(this);
 	}
 
 	@Override
@@ -28,21 +31,33 @@ public class RotatedPillarBlockBuilder extends BlockBuilder {
 			stateGen.variant("axis=y", v -> v.model(verticalModel));
 			stateGen.variant("axis=z", v -> v.model(horizontalModel).x(90));
 		});
+		if (this.modelJson != null) {
+			generator.json(this.newID("models/block/", ""), this.modelJson);
+			String parent = this.modelJson.get("parent").getAsString();
+			if (parent != null) {
+				JsonObject horizontalJson = this.modelJson.deepCopy();
+				horizontalJson.addProperty("parent", parent + "_horizontal");
+				generator.json(this.newID("models/block/", "_horizontal"), horizontalJson);
+			}
 
-		final var sideTexture = textures.get("side").getAsString();
-		final var topTexture = textures.get("top").getAsString();
+		} else {
 
-		generator.blockModel(id, modelGen -> {
-			modelGen.parent("minecraft:block/cube_column");
-			modelGen.texture("side", sideTexture);
-			modelGen.texture("end", topTexture);
-		});
+			final var sideTexture = textures.get("side").getAsString();
+			final var topTexture = textures.get("top").getAsString();
 
-		generator.blockModel(newID("", "_horizontal"), modelGen -> {
-			modelGen.parent("minecraft:block/cube_column_horizontal");
-			modelGen.texture("side", sideTexture);
-			modelGen.texture("end", topTexture);
-		});
+			generator.blockModel(id, modelGen -> {
+				modelGen.parent("minecraft:block/cube_column");
+				modelGen.texture("side", sideTexture);
+				modelGen.texture("end", topTexture);
+			});
+
+			generator.blockModel(newID("", "_horizontal"), modelGen -> {
+				modelGen.parent("minecraft:block/cube_column_horizontal");
+				modelGen.texture("side", sideTexture);
+				modelGen.texture("end", topTexture);
+			});
+
+		}
 
 		generator.itemModel(itemBuilder.id, modelGen -> modelGen.parent(newID("block/", "").toString()));
 	}

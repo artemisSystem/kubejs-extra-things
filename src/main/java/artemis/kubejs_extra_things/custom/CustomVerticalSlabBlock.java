@@ -1,5 +1,7 @@
 package artemis.kubejs_extra_things.custom;
 
+import dev.latvian.mods.kubejs.block.BlockBuilder;
+import dev.latvian.mods.kubejs.block.custom.BasicBlockJS;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -26,7 +28,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class CustomVerticalSlabBlock extends Block implements SimpleWaterloggedBlock {
+public class CustomVerticalSlabBlock extends BasicBlockJS implements SimpleWaterloggedBlock {
 	public static final EnumProperty<SlabType> TYPE = BlockStateProperties.SLAB_TYPE;
 	public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -35,8 +37,8 @@ public class CustomVerticalSlabBlock extends Block implements SimpleWaterloggedB
 	protected static final VoxelShape WEST_AABB = Block.box(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
 	protected static final VoxelShape EAST_AABB = Block.box(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
-	public CustomVerticalSlabBlock(Properties properties) {
-		super(properties);
+	public CustomVerticalSlabBlock(BlockBuilder builder) {
+		super(builder);
 		this.registerDefaultState(this.defaultBlockState()
 			.setValue(TYPE, SlabType.BOTTOM)
 			.setValue(AXIS, Direction.Axis.X)

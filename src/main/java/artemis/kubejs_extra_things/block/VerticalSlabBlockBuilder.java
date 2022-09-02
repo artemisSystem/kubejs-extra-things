@@ -14,7 +14,7 @@ public class VerticalSlabBlockBuilder extends BlockBuilder {
 
 	@Override
 	public Block createObject() {
-		return new CustomVerticalSlabBlock(createProperties());
+		return new CustomVerticalSlabBlock(this);
 	}
 
 	@Override
