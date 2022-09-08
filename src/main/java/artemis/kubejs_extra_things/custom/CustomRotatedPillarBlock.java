@@ -1,5 +1,6 @@
 package artemis.kubejs_extra_things.custom;
 
+import artemis.kubejs_extra_things.util.VoxelMath;
 import dev.latvian.mods.kubejs.BuilderBase;
 import dev.latvian.mods.kubejs.RegistryObjectBuilderTypes;
 import dev.latvian.mods.kubejs.block.BlockBuilder;
@@ -63,7 +64,11 @@ public class CustomRotatedPillarBlock extends BasicBlockJS implements MaybeWater
 
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-		VoxelShape baseShape = super.getShape(blockState, blockGetter, blockPos, collisionContext);
-		return baseShape;
+		VoxelShape shape = super.getShape(blockState, blockGetter, blockPos, collisionContext);
+		return switch (blockState.getValue(AXIS)) {
+			case X -> VoxelMath.rotateZ(shape);
+			case Y -> shape;
+			case Z -> VoxelMath.rotateX(shape);
+		};
 	}
 }
