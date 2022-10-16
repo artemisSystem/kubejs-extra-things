@@ -67,7 +67,7 @@ public class CustomVerticalSlabBlock extends BasicBlockJS implements SimpleWater
 		Direction axisDirection = switch (state.getValue(AXIS)) {
 			case X -> Direction.WEST;
 			case Z -> Direction.NORTH;
-			// this case shouldn't happen but java doesnt know that
+			// this can't happen but java doesn't know that :(
 			case Y -> Direction.DOWN;
 		};
 		return state.getValue(TYPE) == SlabType.TOP ? axisDirection.getOpposite() : axisDirection;
@@ -114,7 +114,7 @@ public class CustomVerticalSlabBlock extends BasicBlockJS implements SimpleWater
 		} else {
 			FluidState fluidState = blockPlaceContext.getLevel().getFluidState(clickedPos);
 			BlockState state = this.defaultBlockState().setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
-			Direction direction = blockPlaceContext.getNearestLookingDirection();
+			Direction direction = blockPlaceContext.getHorizontalDirection();
 			return setStateToDirection(direction, state);
 		}
 	}
@@ -123,8 +123,22 @@ public class CustomVerticalSlabBlock extends BasicBlockJS implements SimpleWater
 	public boolean canBeReplaced(BlockState blockState, BlockPlaceContext blockPlaceContext) {
 		ItemStack itemStack = blockPlaceContext.getItemInHand();
 		SlabType slabType = blockState.getValue(TYPE);
-
-		return slabType != SlabType.DOUBLE && itemStack.is(this.asItem());
+		if (slabType != SlabType.DOUBLE && itemStack.is(this.asItem())) {
+			if (blockPlaceContext.replacingClickedOnBlock()) {
+				//return false;
+				boolean bl = blockPlaceContext.getClickLocation().y - (double)blockPlaceContext.getClickedPos().getY() > 0.5D;
+				Direction direction = blockPlaceContext.getClickedFace();
+				if (slabType == SlabType.BOTTOM) {
+					return direction == Direction.UP || bl && direction.getAxis().isHorizontal();
+				} else {
+					return direction == Direction.DOWN || !bl && direction.getAxis().isHorizontal();
+				}
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
 	}
 
 	public boolean placeLiquid(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState, FluidState fluidState) {

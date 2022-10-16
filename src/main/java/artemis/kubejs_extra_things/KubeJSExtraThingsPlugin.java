@@ -14,5 +14,6 @@ public class KubeJSExtraThingsPlugin extends KubeJSPlugin {
 		RegistryObjectBuilderTypes.BLOCK.addType("decaying_mushroom_block", DecayingMushroomBlockBuilder.class, DecayingMushroomBlockBuilder::new);
 		RegistryObjectBuilderTypes.BLOCK.addType("beehive", BeeHiveBlockBuilder.class, BeeHiveBlockBuilder::new);
 		RegistryObjectBuilderTypes.BLOCK.addType("vertical_slab", VerticalSlabBlockBuilder.class, VerticalSlabBlockBuilder::new);
+		RegistryObjectBuilderTypes.BLOCK.addType("vine", VineBlockBuilder.class, VineBlockBuilder::new);
 	}
 }
